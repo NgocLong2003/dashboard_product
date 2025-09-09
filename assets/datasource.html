@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Upload File Excel</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --border-color: #ddd;
+            --box-bg-color: #ffffff;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --header-bg-color: #f7f9fc;
+            --font-color: #333;
+            --danger-color: #e74c3c;
+            --danger-hover-color: #c0392b;
+            --excel-icon-color: #1D6F42;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f5f7;
+            margin: 0;
+            padding: 20px;
+            color: var(--font-color);
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .box {
+            background-color: var(--box-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            flex-basis: calc(25% - 20px);
+            min-width: 280px;
+        }
+        .box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: var(--header-bg-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .box-header h2 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .upload-btn {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: transform 0.2s ease;
+        }
+        .upload-btn:hover {
+            transform: scale(1.1);
+        }
+        .upload-btn input[type="file"] {
+            display: none;
+        }
+        .file-list {
+            padding: 15px;
+            flex-grow: 1;
+            min-height: 250px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .file-stack {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #e9f3ff;
+            border: 1px solid #b8d4f8;
+            border-radius: 5px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+        .file-icon-excel {
+            color: var(--excel-icon-color);
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        .file-stack-name {
+            flex-grow: 1;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .delete-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--danger-color);
+            flex-shrink: 0;
+        }
+        .delete-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: color 0.2s ease;
+        }
+        .delete-btn:hover {
+            color: var(--danger-hover-color);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 1200px) {
+            .box { flex-basis: calc(50% - 20px); }
+        }
+        @media (max-width: 600px) {
+            .box { flex-basis: 100%; }
+            body { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <div class="box" data-category="Viavet">
+            <div class="box-header">
+                <h2>Viavet</h2>
+                <label class="upload-btn" title="Upload file Excel">&#x1F4C2;<input type="file" class="file-input" accept=".xlsx" multiple></label>
+            </div>
+            <div class="file-list"></div>
+        </div>
+
+        <div class="box" data-category="Sanfovet">
+            <div class="box-header">
+                <h2>Sanfovet</h2>
+                <label class="upload-btn" title="Upload file Excel">&#x1F4C2;<input type="file" class="file-input" accept=".xlsx" multiple></label>
+            </div>
+            <div class="file-list"></div>
+        </div>
+
+        <div class="box" data-category="DufaFarm">
+            <div class="box-header">
+                <h2>DufaFarm</h2>
+                <label class="upload-btn" title="Upload file Excel">&#x1F4C2;<input type="file" class="file-input" accept=".xlsx" multiple></label>
+            </div>
+            <div class="file-list"></div>
+        </div>
+
+        <div class="box" data-category="Duan">
+            <div class="box-header">
+                <h2>Dự án</h2>
+                <label class="upload-btn" title="Upload file Excel">&#x1F4C2;<input type="file" class="file-input" accept=".xlsx" multiple></label>
+            </div>
+            <div class="file-list"></div>
+        </div>
+
+        <div class="box" data-category="Xuatkhau">
+            <div class="box-header">
+                <h2>Xuất khẩu</h2>
+                <label class="upload-btn" title="Upload file Excel">&#x1F4C2;<input type="file" class="file-input" accept=".xlsx" multiple></label>
+            </div>
+            <div class="file-list"></div>
+        </div>
+
+        <div class="box" data-category="Thuysan">
+            <div class="box-header">
+                <h2>NL&Premix&Thủy sản</h2>
+                <label class="upload-btn" title="Upload file Excel">&#x1F4C2;<input type="file" class="file-input" accept=".xlsx" multiple></label>
+            </div>
+            <div class="file-list"></div>
+        </div>
+
+        <div class="box" data-category="TPBVSK">
+            <div class="box-header">
+                <h2>TP BVSK</h2>
+                <label class="upload-btn" title="Upload file Excel">&#x1F4C2;<input type="file" class="file-input" accept=".xlsx" multiple></label>
+            </div>
+            <div class="file-list"></div>
+        </div>
+
+        <div class="box" data-category="ViaProtic">
+            <div class="box-header">
+                <h2>ViaProtic</h2>
+                <label class="upload-btn" title="Upload file Excel">&#x1F4C2;<input type="file" class="file-input" accept=".xlsx" multiple></label>
+            </div>
+            <div class="file-list"></div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const mainContainer = document.getElementById('mainContainer');
+
+        const excelIconSVG = `<svg class="file-icon-excel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.17 3.25Q21.5 3.25 21.76 3.5 22 3.75 22 4.09V19.91Q22 20.25 21.76 20.5 21.5 20.75 21.17 20.75H2.83Q2.5 20.75 2.24 20.5 2 20.25 2 19.91V4.09Q2 3.75 2.24 3.5 2.5 3.25 2.83 3.25H21.17M12 10.5L14.67 15.5H12.59L11.37 13.2L10.15 15.5H8.07L10.74 10.5L8.23 5.5H10.33L11.37 7.54L12.41 5.5H14.5L12 10.5M21.17 5.5H16.5V4.25H21.17V5.5M16.5 19.75V7.75H21.17V19.75H16.5Z"></path></svg>`;
+        const trashIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"></path></svg>`;
+
+        function createFileStack(fileName) {
+            const fileStack = document.createElement('div');
+            fileStack.className = 'file-stack';
+            fileStack.dataset.filename = fileName;
+            const displayName = fileName.length > 30 ? fileName.substring(0, 27) + '...' : fileName;
+            fileStack.innerHTML = `${excelIconSVG}<span class="file-stack-name" title="${fileName}">${displayName}</span><button class="delete-btn" title="Xóa file">${trashIconSVG}</button>`;
+            return fileStack;
+        }
+
+        async function loadFilesForCategory(boxElement) {
+            const category = boxElement.dataset.category;
+            const fileListElement = boxElement.querySelector('.file-list');
+            if (!category || !fileListElement) return;
+
+            try {
+                const response = await fetch(`/api/files/${encodeURIComponent(category)}`);
+                if (!response.ok) throw new Error(`Server responded with ${response.status}`);
+                
+                const files = await response.json();
+                fileListElement.innerHTML = '';
+                if (files && files.length > 0) {
+                    files.forEach(fileName => fileListElement.appendChild(createFileStack(fileName)));
+                } else {
+                    fileListElement.innerHTML = '<p style="text-align:center; color: #888;">Chưa có file nào.</p>';
+                }
+            } catch (error) {
+                console.error(`Lỗi khi tải file cho category "${category}":`, error);
+                fileListElement.innerHTML = '<p style="text-align:center; color: var(--danger-color);">Lỗi tải dữ liệu.</p>';
+            }
+        }
+
+        // --- CẢI TIẾN: Xử lý upload nhiều file ---
+        async function handleFileUpload(event) {
+            const files = event.target.files;
+            const boxElement = event.target.closest('.box');
+            const category = boxElement.dataset.category;
+            if (!files.length || !category) return;
+
+            // Lặp qua từng file và upload
+            for (const file of files) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    const response = await fetch(`/api/upload/${encodeURIComponent(category)}`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    if (!result.success) {
+                        alert(`Upload file "${file.name}" thất bại: ` + (result.error || 'Lỗi không xác định'));
+                    }
+                } catch (error) {
+                    console.error(`Lỗi khi upload file "${file.name}":`, error);
+                    alert(`Có lỗi nghiêm trọng xảy ra khi upload file "${file.name}".`);
+                }
+            }
+            
+            // Sau khi upload xong tất cả, làm mới danh sách file một lần
+            await loadFilesForCategory(boxElement);
+            event.target.value = '';
+        }
+
+        async function handleDelete(event) {
+            const deleteButton = event.target.closest('.delete-btn');
+            if (deleteButton) {
+                const fileStack = deleteButton.closest('.file-stack');
+                const boxElement = deleteButton.closest('.box');
+                const filename = fileStack.dataset.filename;
+                const category = boxElement.dataset.category;
+                
+                if (!filename || !category || !confirm(`Bạn có chắc muốn xóa file: ${filename}?`)) return;
+
+                try {
+                    const response = await fetch(`/api/files/${encodeURIComponent(category)}/${encodeURIComponent(filename)}`, {
+                        method: 'DELETE'
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                         await loadFilesForCategory(boxElement);
+                    } else {
+                         alert('Xóa thất bại: ' + (result.error || 'Lỗi không xác định'));
+                    }
+                } catch (error) {
+                    console.error('Lỗi khi xóa file:', error);
+                    alert('Có lỗi xảy ra khi xóa file.');
+                }
+            }
+        }
+
+        document.querySelectorAll('.file-input').forEach(input => input.addEventListener('change', handleFileUpload));
+        mainContainer.addEventListener('click', handleDelete);
+        document.querySelectorAll('.box[data-category]').forEach(box => {
+            loadFilesForCategory(box);
+        });
+    });
+</script>
+</body>
+</html>
